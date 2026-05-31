@@ -57,3 +57,16 @@ func ExistsStat(s string) (bool, os.FileInfo, error) {
 
 	return true, i, nil
 }
+
+func IsDir(s string) error {
+	i, err := os.Stat(s)
+	if err != nil {
+		return err
+	}
+
+	if !i.IsDir() {
+		return errors.New(s + " is not a directory")
+	}
+
+	return nil
+}
