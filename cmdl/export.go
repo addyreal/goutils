@@ -97,7 +97,7 @@ func ParseFlags(i []FlagInput) error {
 	args := os.Args[1:]
 	for _, input := range i {
 		var value string
-		for i := 0; i+1 < len(args)-1; i += 2 {
+		for i := 0; i < len(args)-1; i += 2 {
 			if args[i] == input.Key {
 				value = args[i+1]
 			}
