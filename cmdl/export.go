@@ -6,11 +6,23 @@ import (
 	"strconv"
 )
 
+func handleMissingInput(def string, req bool) (string, bool) {
+	if def != "" {
+		return def, true
+	}
+
+	if req {
+		return "", false
+	}
+
+	return "", true
+}
+
 type EnvironmentInput struct {
-	Key     string
-	Default string
-	Must    bool
-	Int     bool
+	Key      string
+	Default  string
+	Required bool
+	Int      bool
 }
 
 var environmentMap map[string]string = make(map[string]string)
@@ -24,22 +36,12 @@ func ParseEnv(i []EnvironmentInput) error {
 		value := os.Getenv(input.Key)
 
 		if value == "" {
-			if input.Must {
+			def, ok := handleMissingInput(input.Default, input.Required)
+			if !ok {
 				return errors.New("Environment variable " + input.Key + " not provided")
 			}
 
-			if input.Default != "" {
-				if input.Int {
-					_, err := strconv.Atoi(input.Default)
-					if err != nil {
-						return errors.New("Environment variable default " + input.Key + " failed to parse as int")
-					}
-				}
-
-				environmentMap[input.Key] = input.Default
-			}
-
-			continue
+			value = def
 		}
 
 		if input.Int {
@@ -56,7 +58,12 @@ func ParseEnv(i []EnvironmentInput) error {
 }
 
 func GetEnv(s string) string {
-	return environmentMap[s]
+	val, ok := environmentMap[s]
+	if !ok {
+		return ""
+	}
+
+	return val
 }
 
 func GetEnvInt(s string) int {
@@ -74,9 +81,10 @@ func GetEnvInt(s string) int {
 }
 
 type FlagInput struct {
-	Key string
-	Opt bool
-	Int bool
+	Key      string
+	Default  string
+	Optional bool
+	Int      bool
 }
 
 var flagMap map[string]string = make(map[string]string)
@@ -87,31 +95,43 @@ func ParseFlags(i []FlagInput) error {
 	}
 
 	args := os.Args[1:]
-	for _, flag := range i {
-		for i := 0; i < len(args)-1; i += 2 {
-			if args[i] == flag.Key {
-				if flag.Int {
-					_, err := strconv.Atoi(args[i+1])
-					if err != nil {
-						return errors.New("Flag " + flag.Key + " failed to parse as int")
-					}
-				}
-
-				flagMap[flag.Key] = args[i+1]
+	for _, input := range i {
+		var value string
+		for i := 0; i+1 < len(args)-1; i += 2 {
+			if args[i] == input.Key {
+				value = args[i+1]
 			}
 		}
 
-		_, ok := flagMap[flag.Key]
-		if !flag.Opt && !ok {
-			return errors.New("Flag " + flag.Key + " not provided")
+		if value == "" {
+			def, ok := handleMissingInput(input.Default, !input.Optional)
+			if !ok {
+				return errors.New("Flag " + input.Key + " not provided")
+			}
+
+			value = def
 		}
+
+		if input.Int {
+			_, err := strconv.Atoi(value)
+			if err != nil {
+				return errors.New("Flag " + input.Key + " failed to parse as int")
+			}
+		}
+
+		flagMap[input.Key] = value
 	}
 
 	return nil
 }
 
 func GetFlag(s string) string {
-	return flagMap[s]
+	val, ok := flagMap[s]
+	if !ok {
+		return ""
+	}
+
+	return val
 }
 
 func GetFlagInt(s string) int {
