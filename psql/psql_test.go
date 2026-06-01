@@ -9,29 +9,29 @@ func TestPsql(t *testing.T) {
 		name    string
 		config  Config
 		connstr map[string]string
-		ok     bool
+		ok      bool
 	}{
 		{
 			"ok all",
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -45,21 +45,21 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -73,20 +73,20 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -100,22 +100,22 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "please",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "please",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -129,22 +129,22 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "tlsv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -158,22 +158,22 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "tlsv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "nonexistent",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -187,22 +187,22 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 0,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 10,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  0,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        10,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},
@@ -216,22 +216,22 @@ func TestPsql(t *testing.T) {
 			Config{
 				Servers: map[string]ServerObject{
 					"main": {
-						Host: "example.com",
-						HostAddr: "1.2.3.4",
-						Port: 1234,
-						DbName: "mydb",
-						User: "myuser",
-						Password: "mypassword",
-						ConnectTimeout: 0,
-						SslMode: "verify-full",
-						SslRootCert: "/path/to/cert",
+						Host:                  "example.com",
+						HostAddr:              "1.2.3.4",
+						Port:                  1234,
+						DbName:                "mydb",
+						User:                  "myuser",
+						Password:              "mypassword",
+						ConnectTimeout:        0,
+						SslMode:               "verify-full",
+						SslRootCert:           "/path/to/cert",
 						SslMinProtocolVersion: "TLSv1.2",
 					},
 				},
 				Queries: map[string]QueryObject{
 					"my-query": {
 						Server: "main",
-						Query: "SELECT * FROM table;",
+						Query:  "SELECT * FROM table;",
 					},
 				},
 			},

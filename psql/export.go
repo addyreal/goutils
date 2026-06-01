@@ -1,30 +1,30 @@
 // Example config:
 //
-//   servers:
-//     auth:
-//       host: "example.com"
-//       port: 1234
-//       dbname: "mydb"
-//       user: "myuser"
-//       password: "mypassword"
-//       connect_timeout: 10
-//     main:
-//       hostaddr: "2.3.4.5"
-//       port: 2345
-//       dbname: "somedb"
-//       user: "someuser"
-//       password: "somepassword"
-//       sslmode: "verify-full"
-//       sslrootcert: "/etc/ssl/certs/ca-certificates.crt"
-//       ssl_min_protocol_version: "TLSv1.2"
-//   
-//   queries:
-//     get-basic-auth:
-//       server: "auth"
-//       query: "SELECT * FROM public.users;"
-//     get-thing:
-//       server: "main"
-//       query: "SELECT thing FROM public.stuff;"
+//	servers:
+//	  auth:
+//	    host: "example.com"
+//	    port: 1234
+//	    dbname: "mydb"
+//	    user: "myuser"
+//	    password: "mypassword"
+//	    connect_timeout: 10
+//	  main:
+//	    hostaddr: "2.3.4.5"
+//	    port: 2345
+//	    dbname: "somedb"
+//	    user: "someuser"
+//	    password: "somepassword"
+//	    sslmode: "verify-full"
+//	    sslrootcert: "/etc/ssl/certs/ca-certificates.crt"
+//	    ssl_min_protocol_version: "TLSv1.2"
+//
+//	queries:
+//	  get-basic-auth:
+//	    server: "auth"
+//	    query: "SELECT * FROM public.users;"
+//	  get-thing:
+//	    server: "main"
+//	    query: "SELECT thing FROM public.stuff;"
 package psql
 
 import (
@@ -104,6 +104,11 @@ func FromConfig(c *Config) (*Database, error) {
 		servers: servers,
 		queries: queries,
 	}, nil
+}
+
+func (d *Database) HasQuery(name string) bool {
+	_, ok := d.queries[name]
+	return ok
 }
 
 func (d *Database) QueryRow(ctx context.Context, name string, args ...any) (pgx.Row, error) {
