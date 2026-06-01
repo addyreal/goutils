@@ -39,7 +39,7 @@ var (
 	ErrNotFound error = errors.New("not found")
 )
 
-type database struct {
+type Database struct {
 	servers map[string]*pgxpool.Pool
 	queries map[string]query
 }
@@ -49,7 +49,7 @@ type query struct {
 	conn  *pgxpool.Pool
 }
 
-func FromYaml(path string) (*database, error) {
+func FromYaml(path string) (*Database, error) {
 	cfg, err := configFromYaml(path)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func FromYaml(path string) (*database, error) {
 	return d, nil
 }
 
-func FromConfig(c *Config) (*database, error) {
+func FromConfig(c *Config) (*Database, error) {
 	// Validate config
 	err := c.validate()
 	if err != nil {
@@ -100,13 +100,13 @@ func FromConfig(c *Config) (*database, error) {
 		}
 	}
 
-	return &database{
+	return &Database{
 		servers: servers,
 		queries: queries,
 	}, nil
 }
 
-func (d *database) QueryRow(ctx context.Context, name string, args ...any) (pgx.Row, error) {
+func (d *Database) QueryRow(ctx context.Context, name string, args ...any) (pgx.Row, error) {
 	query, ok := d.queries[name]
 	if !ok {
 		return nil, ErrNotFound
@@ -115,7 +115,7 @@ func (d *database) QueryRow(ctx context.Context, name string, args ...any) (pgx.
 	return query.conn.QueryRow(ctx, query.query, args...), nil
 }
 
-func (d *database) Query(ctx context.Context, name string, args ...any) (pgx.Rows, error) {
+func (d *Database) Query(ctx context.Context, name string, args ...any) (pgx.Rows, error) {
 	query, ok := d.queries[name]
 	if !ok {
 		return nil, ErrNotFound
@@ -124,13 +124,13 @@ func (d *database) Query(ctx context.Context, name string, args ...any) (pgx.Row
 	return query.conn.Query(ctx, query.query, args...)
 }
 
-func (d *database) CloseAll() {
+func (d *Database) CloseAll() {
 	for _, conn := range d.servers {
 		conn.Close()
 	}
 }
 
-func (d *database) Close(name string) error {
+func (d *Database) Close(name string) error {
 	conn, ok := d.servers[name]
 	if !ok {
 		return ErrNotFound
