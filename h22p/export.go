@@ -57,6 +57,11 @@ func (s *Server) Serve() error {
 	return nil
 }
 
+func (s *Server) ServeHandler(h http.HandlerFunc) error {
+	s.Handler = h
+	return s.Serve()
+}
+
 func GetRealIp(r *http.Request) string {
 	s := r.Header.Get("X-Real-IP")
 	if s != "" {
